@@ -1,8 +1,11 @@
+import Login from "./features/auth/pages/Login";
+
 function App() {
   return (
-    <h1 className="text-3xl font-bold underline text-red-500">
-      Hello world!
-    </h1>
+    <div className="bg-background w-[100vw] h-[100vh]">
+      {/* <h1 className="text-foreground">Hi, This is bg-slate-950</h1> */}
+      <Login/>
+    </div>
   )
 }
 
