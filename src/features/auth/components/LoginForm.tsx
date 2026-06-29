@@ -23,7 +23,7 @@ const LoginForm = () => {
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-extrabold text-white">SignIn</h2>
           <button className="text-xs text-blue-400 hover:text-blue-300 font-semibold cursor-pointer transition-colors">
-            Need an Account
+            Need an Account?
           </button>
         </div>
 
