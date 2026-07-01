@@ -1,7 +1,21 @@
 import { ArrowRight, Lock, LucideKanban, Mail, User } from "lucide-react";
 import Button from "../../../components/Button";
+import Input from "../../../components/Input";
+import { useState } from "react";
+import type { UserDataSignUp } from "../types/auth.types";
 
 const SignupForm = () => {
+  const [userData, setUserData] = useState<UserDataSignUp>({
+    userName: "",
+    password: "",
+    confirmPassword: "",
+    email: "",
+  });
+
+  const onSubmitUserData = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(userData);
+  };
   return (
     <div className="w-full max-w-md z-10 flex flex-col items-center text-foreground">
       {/* App Icons */}
@@ -31,7 +45,7 @@ const SignupForm = () => {
         </div>
 
         {/* form */}
-        <form className="spave-y-4 opacity:1">
+        <form className="spave-y-4 opacity:1" onSubmit={onSubmitUserData}>
           {/* Full Name */}
           <div className="space-y-1.5 mb-5">
             <div className="space-y-4 text-[10px] uppercase text-labelColor tracking-wider my-2">
@@ -42,10 +56,17 @@ const SignupForm = () => {
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
               />
-              <input
+              <Input
                 type="text"
                 className="w-full bg-[#0f172a] border border-slate-850 focus:border-blue-500 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none transition-all"
                 placeholder="John Doe"
+                value={userData.userName}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    userName: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
@@ -60,10 +81,14 @@ const SignupForm = () => {
                 size={18}
                 className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
               />
-              <input
+              <Input
                 type="text"
                 className="w-full bg-[#0f172a] border border-slate-850 focus:border-blue-500 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none transition-all"
                 placeholder="name@workflow.com"
+                value={userData.email}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserData(prev => ({
+                  ...prev , email: e.target.value
+                }))}
               />
             </div>
           </div>
@@ -82,12 +107,16 @@ const SignupForm = () => {
                 type="password"
                 className="w-full bg-[#0f172a] border border-slate-850 focus:border-blue-500 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none transition-all"
                 placeholder="***************"
+                value={userData.password}
+                onChange={(e) => setUserData(prev => ({
+                  ...prev,password: e.target.value
+                }))}
               />
             </div>
           </div>
 
           {/* Confirm Password */}
-          
+
           <div className="space-y-1.5 mb-4">
             <div className="space-y-4 text-[10px] uppercase text-labelColor tracking-wider my-2">
               <label htmlFor="Confirm Password">Confirm Password</label>
@@ -101,11 +130,14 @@ const SignupForm = () => {
                 type="password"
                 className="w-full bg-[#0f172a] border border-slate-850 focus:border-blue-500 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none transition-all"
                 placeholder="***************"
+                value={userData.confirmPassword}
+                onChange={(e) => setUserData(prev => ({
+                  ...prev,confirmPassword: e.target.value
+                }))}
               />
             </div>
           </div>
 
-          
           {/* Signin Button */}
           <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 px-4 rounded-xl text-xs font-bold transition-all shadow-lg shadow-blue-500/10 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 mt-2">
             Sign Up <ArrowRight size={14} />
@@ -119,12 +151,8 @@ const SignupForm = () => {
             Or Choose
           </span>
         </div>
-        {/* <button className="w-full bg-slate-800 hover:bg-slate-750 text-slate-200 py-2.5 px-4 rounded-xl text-xs font-bold transition-all border border-slate-700 flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50">
-          Explore As Guest
-        </button> */}
-        <Button className="w-full">
-            Explore As Guest
-        </Button>
+
+        <Button className="w-full">Explore As Guest</Button>
       </div>
     </div>
   );
