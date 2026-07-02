@@ -3,6 +3,8 @@ import Button from "../../../components/Button";
 import Input from "../../../components/Input";
 import { useState } from "react";
 import type { UserDataSignUp } from "../types/auth.types";
+import { GoogleLogin, type CredentialResponse } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 const SignupForm = () => {
   const [userData, setUserData] = useState<UserDataSignUp>({
@@ -15,6 +17,14 @@ const SignupForm = () => {
   const onSubmitUserData = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(userData);
+  };
+
+  const handleGoogleSuccess = (response: CredentialResponse) => {
+    if (!response.credential) return;
+
+    const user = jwtDecode(response.credential);
+
+    console.log(user);
   };
   return (
     <div className="w-full max-w-md z-10 flex flex-col items-center text-foreground">
@@ -86,9 +96,12 @@ const SignupForm = () => {
                 className="w-full bg-[#0f172a] border border-slate-850 focus:border-blue-500 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none transition-all"
                 placeholder="name@workflow.com"
                 value={userData.email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUserData(prev => ({
-                  ...prev , email: e.target.value
-                }))}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    email: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
@@ -108,9 +121,12 @@ const SignupForm = () => {
                 className="w-full bg-[#0f172a] border border-slate-850 focus:border-blue-500 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none transition-all"
                 placeholder="***************"
                 value={userData.password}
-                onChange={(e) => setUserData(prev => ({
-                  ...prev,password: e.target.value
-                }))}
+                onChange={(e) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    password: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
@@ -131,9 +147,12 @@ const SignupForm = () => {
                 className="w-full bg-[#0f172a] border border-slate-850 focus:border-blue-500 rounded-xl py-2.5 pl-10 pr-4 text-xs text-slate-200 placeholder:text-slate-600 focus:outline-none transition-all"
                 placeholder="***************"
                 value={userData.confirmPassword}
-                onChange={(e) => setUserData(prev => ({
-                  ...prev,confirmPassword: e.target.value
-                }))}
+                onChange={(e) =>
+                  setUserData((prev) => ({
+                    ...prev,
+                    confirmPassword: e.target.value,
+                  }))
+                }
               />
             </div>
           </div>
@@ -152,7 +171,18 @@ const SignupForm = () => {
           </span>
         </div>
 
-        <Button className="w-full">Explore As Guest</Button>
+        <Button className="w-full mb-3">Explore As Guest</Button>
+        <GoogleLogin
+          onSuccess={handleGoogleSuccess}
+          onError={() => {
+            console.log("Login Failed");
+          }}
+          theme="filled_blue"
+          shape="pill"
+          size="large"
+          text="signup_with"
+          width="100%"
+        />
       </div>
     </div>
   );
