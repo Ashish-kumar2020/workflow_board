@@ -18,7 +18,7 @@ const WorkSpace = ({ onClose }: WorkSpaceProps) => {
         </div>
         <hr className="border-slate-800 mt-4 w-full" />
         <form>
-          <div className="p-4 space-y-2">
+          <div className="p-4 space-y-2 mb-5">
             <div>
               <label
                 htmlFor="boardName"
@@ -32,7 +32,7 @@ const WorkSpace = ({ onClose }: WorkSpaceProps) => {
                 placeholder="e.g. 🚀 Apollo Launch, 🏠 Chore List"
               />
             </div>
-            <div>
+            <div className="mt-4">
               <label
                 htmlFor="description"
                 className="block text-xs font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider mb-1.5"
