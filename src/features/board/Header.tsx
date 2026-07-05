@@ -38,7 +38,7 @@ const Header = () => {
           />
         </div>
 
-        <div className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-500/5 px-3.5 py-1 rounded-full border border-emerald-500/20 select-none">
+        <div title="Live Collabrative board - Under Development" className="hidden sm:flex items-center gap-1.5 text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 dark:bg-emerald-500/5 px-3.5 py-1 rounded-full border border-emerald-500/20 select-none cursor-pointer">
           <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full animate-pulse"></span>
           <span>LIVE</span>
         </div>
@@ -47,7 +47,7 @@ const Header = () => {
           <button className="bg-blue-600 hover:bg-blue-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all shadow-md shadow-blue-600/10 shrink-0 cursor-pointer" onClick={createTaskHandler}>Create Task</button>
         </div>
 
-        <button className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">
+        <button title="LogOut" className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer">
           <LucideLogOut
             size={18}
             className="text-slate-600 dark:text-slate-300"
