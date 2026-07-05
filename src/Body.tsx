@@ -1,3 +1,4 @@
+import BoardDescription from "./features/board/BoardDescription";
 import Header from "./features/board/Header";
 import PriorityBorad from "./features/board/PriorityBorad";
 import SideNavBar from "./features/board/SideNavBar";
@@ -9,6 +10,7 @@ const Body = () => {
       <div className="h-screen w-screen">
         <Header />
         <PriorityBorad />
+        <BoardDescription/>
       </div>
     </div>
   );
