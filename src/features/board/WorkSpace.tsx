@@ -5,7 +5,7 @@ type WorkSpaceProps = {
 };
 const WorkSpace = ({ onClose }: WorkSpaceProps) => {
   return (
-    <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center">
+    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-md flex items-center justify-center">
       <div className="bg-slate-900 p-6 rounded-xl w-[500px] border border-slate-800">
         <div className="flex justify-between">
           <div className="w-[180px] flex justify-around">

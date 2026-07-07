@@ -67,6 +67,7 @@ const Cards = ({ tasks }: Props) => {
           </div>
         </div>
         <div className="flex-1 overflow-y-auto max-h-[70vh] min-h-[150px] space-y-3 pr-1 scrollbar-thin scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-350 rounded-xl transition-colors duration-150 p-1 ">
+          {/* If Content is not present */}
           {/* <div className="h-28 flex flex-col items-center justify-center text-center p-4 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50/20 dark:bg-slate-900/10">
             <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500">
               No Task Here

@@ -65,13 +65,13 @@ const SideNavBar = () => {
                 </kbd>
               </div>
               <div className="flex justify-between items-center text-[11px] text-slate-400">
-                <span>Create task</span>
+                <span>Search Board</span>
                 <kbd className="bg-slate-200 dark:bg-slate-700 px-1.5 rounded border border-slate-300 dark:border-slate-600 font-mono text-[9px]">
                   /
                 </kbd>
               </div>
               <div className="flex justify-between items-center text-[11px] text-slate-400">
-                <span>Create task</span>
+                <span>Cheatsheet</span>
                 <kbd className="bg-slate-200 dark:bg-slate-700 px-1.5 rounded border border-slate-300 dark:border-slate-600 font-mono text-[9px]">
                   H
                 </kbd>

@@ -29,7 +29,7 @@ const DragDropMain = () => {
   };
 
   return (
-    <div className="flex-1 overflow-x-auto p-6 bg-[#f8fafc] dark:bg-[#0a0f1d] select-none">
+    <div className="flex-1 overflow-x-auto p-6 bg-[#f8fafc] dark:bg-[#0a0f1d] h-full select-none">
       <DndContext onDragEnd={handleDragEnd}>
         <SortableContext items={tasks.map((task) => task.id)}>
           <Cards tasks={tasks} />

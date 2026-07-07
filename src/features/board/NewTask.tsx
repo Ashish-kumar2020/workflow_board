@@ -6,7 +6,7 @@ type NewtaskProps = {
 
 const NewTask = ({ onClose }: NewtaskProps) => {
   return (
-   <div className="fixed inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center px-4 py-8 overflow-y-auto">
+   <div className="fixed z-50 inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center px-4 py-8 overflow-y-auto">
       <div className="bg-slate-900 p-6 rounded-xl w-[600px] border border-slate-800">
         <div className="flex justify-between">
           <div className="w-[180px] flex justify-around">
