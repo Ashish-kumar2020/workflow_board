@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DndContext, type DragEndEvent } from "@dnd-kit/core";
 import Cards from "./Cards";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import CreateColumn from "../createCard/CreateColumn";
 
 type Task = {
   id: string;
@@ -53,7 +54,7 @@ const DragDropMain = () => {
             rightArrow="LucideArrowRight"
             leftArrow="LucideArrowLeft"
           />
-          {/* <Cards tasks={tasks} /> */}
+          <CreateColumn/>
         </SortableContext>
       </DndContext>
     </div>
