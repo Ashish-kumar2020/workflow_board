@@ -1,10 +1,11 @@
 import { LucideKeyboard, LucideX } from "lucide-react";
 
-type HelpPageProps = {
-    onClose : () => void;
-}
 
-const HelpPage = ({onClose}: HelpPageProps) => {
+type HelpPageProps = {
+  onClose: () => void;
+};
+
+const HelpPage = ({ onClose }: HelpPageProps) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
@@ -19,7 +20,7 @@ const HelpPage = ({onClose}: HelpPageProps) => {
             </h3>
           </div>
           <button className="p-1 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-            <LucideX onClick={onClose}/>
+            <LucideX onClick={onClose} />
           </button>
         </div>
         <div className="p-5 space-y-4">
@@ -120,7 +121,10 @@ const HelpPage = ({onClose}: HelpPageProps) => {
             </div>
           </div>
           <div className="p-4 bg-slate-50 dark:bg-slate-900/40 border-t border-slate-100 dark:border-slate-800/60 flex justify-end">
-            <button className="px-4 py-1.5 text-xs font-medium text-white bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer" onClick={onClose}>
+            <button
+              className="px-4 py-1.5 text-xs font-medium text-white bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer"
+              onClick={onClose}
+            >
               Got it
             </button>
           </div>

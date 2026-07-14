@@ -8,3 +8,8 @@ export interface CreateTaskInterface {
 }
 
 
+
+export interface CreateWorkspaceInterface {
+  boardName: string;
+  description: string;
+}
