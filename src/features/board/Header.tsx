@@ -1,6 +1,7 @@
 import { LucideLogOut, Search } from "lucide-react";
 import NewTask from "./NewTask";
 import { useState } from "react";
+import { useKeyPressEvent } from "react-use";
 
 const Header = () => {
   const [createTaskFlag,setCreateTaskFlag] = useState(false);
@@ -8,6 +9,11 @@ const Header = () => {
   const createTaskHandler = () => {
     setCreateTaskFlag((prev) => !prev)
   }
+  useKeyPressEvent("c", () => {
+  if (!createTaskFlag) {
+    setCreateTaskFlag(true);
+  }
+});
   return (
     <header className="h-16 w-full border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-6">
       <div className="flex items-center gap-3 min-w-0">
