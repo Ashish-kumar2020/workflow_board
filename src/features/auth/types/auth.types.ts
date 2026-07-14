@@ -4,3 +4,5 @@ export interface UserDataSignUp {
   confirmPassword: string;
   email: string;
 }
+
+
