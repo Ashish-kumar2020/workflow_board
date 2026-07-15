@@ -12,7 +12,7 @@ const NewTask = ({ onClose }: NewtaskProps) => {
     description: "",
     targetColumn: "",
     dueDate: "",
-    taskPriority: "",
+    taskPriority: "backlog",
     tagLables: "",
   });
 
@@ -45,7 +45,7 @@ const NewTask = ({ onClose }: NewtaskProps) => {
       description: "",
       targetColumn: "",
       dueDate: "",
-      taskPriority: "",
+      taskPriority: "backlog",
       tagLables: "",
     });
 
@@ -139,7 +139,7 @@ const NewTask = ({ onClose }: NewtaskProps) => {
                     }))
                   }
                 >
-                  <option value="todo">TODO</option>
+                  <option value="backlog">Backlog</option>
                   <option value="inprogress">In Progress</option>
                   <option value="done">Done</option>
                 </select>
