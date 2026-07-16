@@ -4,17 +4,22 @@ import React, { useState } from "react";
 
 type NewtaskProps = {
   onClose: () => void;
+  onCreate: (task: CreateTaskInterface) => void;
 };
 
-const NewTask = ({ onClose }: NewtaskProps) => {
+const NewTask = ({ onClose ,onCreate}: NewtaskProps) => {
   const [createTask, setCreateTask] = useState<CreateTaskInterface>({
+    id: "",
     taskTitle: "",
     description: "",
     targetColumn: "",
     dueDate: "",
     taskPriority: "backlog",
-    tagLables: "",
+    tagLables: [],
   });
+
+  // Raw comma-separated text the user types; converted to string[] on submit
+  const [tagInput, setTagInput] = useState("");
 
   const handleCreateTask = () => {
     if (
@@ -27,27 +32,41 @@ const NewTask = ({ onClose }: NewtaskProps) => {
       alert("All Fields are mandatory");
       return;
     }
+     onCreate({
+      ...createTask,
+      id: crypto.randomUUID(),
+      tagLables: tagInput
+        .split(",")
+        .map((t) => t.trim())
+        .filter(Boolean),
+    });
 
     const getTaskItems = JSON.parse(localStorage.getItem("taskList") ?? "[]");
 
     const updatedTasks = [
       ...getTaskItems,
       {
-        id: crypto.randomUUID(),
         ...createTask,
+        id: crypto.randomUUID(),
+        tagLables: tagInput
+          .split(",")
+          .map((t) => t.trim())
+          .filter(Boolean),
       },
     ];
 
     localStorage.setItem("taskList", JSON.stringify(updatedTasks));
 
     setCreateTask({
+      id: "",
       taskTitle: "",
       description: "",
       targetColumn: "",
       dueDate: "",
       taskPriority: "backlog",
-      tagLables: "",
+      tagLables: [],
     });
+    setTagInput("");
 
     onClose();
   };
@@ -55,14 +74,17 @@ const NewTask = ({ onClose }: NewtaskProps) => {
   const handleCloseModal = () => {
     onClose();
     setCreateTask({
+      id: "",
       taskTitle: "",
       description: "",
       targetColumn: "",
       dueDate: "",
-      taskPriority: "",
-      tagLables: "",
+      taskPriority: "backlog",
+      tagLables: [],
     });
+    setTagInput("");
   };
+
   return (
     <div className="fixed z-50 inset-0 bg-black/40 backdrop-blur-md flex items-center justify-center px-4 py-8 overflow-y-auto">
       <div className="bg-slate-900 p-6 rounded-xl w-[600px] border border-slate-800">
@@ -206,12 +228,9 @@ const NewTask = ({ onClose }: NewtaskProps) => {
                 type="text"
                 placeholder="e.g. frontend, bug, api (separate with commas)"
                 className="w-full px-3.5 py-3 text-sm text-slate-900 dark:text-white bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/35 focus:border-blue-500 transition-shadow placeholder:text-slate-500 dark:placeholder:text-slate-500"
-                value={createTask.tagLables}
+                value={tagInput}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setCreateTask((prev) => ({
-                    ...prev,
-                    tagLables: e.target.value,
-                  }))
+                  setTagInput(e.target.value)
                 }
               />
             </div>

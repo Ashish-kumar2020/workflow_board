@@ -2,8 +2,14 @@ import { LucideLogOut, Search } from "lucide-react";
 import NewTask from "./NewTask";
 import { useRef, useState } from "react";
 import { useKeyPressEvent } from "react-use";
+import type { CreateTaskInterface } from "../boardtypes/board.types";
 
-const Header = () => {
+
+type HeaderProps = {
+  onCreateTask: (task: CreateTaskInterface) => void;
+};
+
+const Header = ({onCreateTask}: HeaderProps) => {
   const [createTaskFlag, setCreateTaskFlag] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const createTaskHandler = () => {
@@ -78,7 +84,9 @@ const Header = () => {
           />
         </button>
       </div>
-      {createTaskFlag && <NewTask onClose={() => setCreateTaskFlag(false)} />}
+      {createTaskFlag && (
+        <NewTask onClose={() => setCreateTaskFlag(false)} onCreate={onCreateTask} />
+      )}
     </header>
   );
 };

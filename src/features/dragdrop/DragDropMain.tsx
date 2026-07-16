@@ -18,15 +18,14 @@ import type { CreateTaskInterface } from "../boardtypes/board.types";
 
 const COLUMNS = ["backlog", "inprogress", "done"];
 
-const DragDropMain = () => {
-  const [tasks, setTasks] = useState<CreateTaskInterface[]>(() => {
-    try {
-      const taskList = localStorage.getItem("taskList");
-      return taskList ? JSON.parse(taskList) : [];
-    } catch {
-      return [];
-    }
-  });
+
+
+type DragDropMainProps = {
+  tasks: CreateTaskInterface[];
+  setTasks: React.Dispatch<React.SetStateAction<CreateTaskInterface[]>>;
+};
+
+const DragDropMain = ({tasks,setTasks}:DragDropMainProps) => {
   const [activeTask, setActiveTask] = useState<CreateTaskInterface | null>(null);
 
   const sensors = useSensors(
@@ -78,6 +77,7 @@ const DragDropMain = () => {
       console.error("Failed to save taskList to localStorage", error);
     }
   }, [tasks]);
+
 
 
   const backlogTask = tasks.filter((t) => t.targetColumn === "backlog");

@@ -6,7 +6,7 @@ export interface CreateTaskInterface {
   targetColumn: string;
   dueDate: string;
   taskPriority: string;
-  tagLables: string;
+tagLables: string[];
 }
 
 

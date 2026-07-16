@@ -20,11 +20,11 @@ type Props = {
   targetColumn: string;
   dueDate: string;
   taskPriority: string;
-  tagLables: string;
+ tagLables: string[];
   // key?: string;
 };
 
-const Cards = ({  tags,taskTitle,description,dueDate,taskPriority, }: Props) => {
+const Cards = ({  taskTitle,description,dueDate,taskPriority,tagLables }: Props) => {
 
 
   return (
@@ -68,7 +68,7 @@ const Cards = ({  tags,taskTitle,description,dueDate,taskPriority, }: Props) => 
 
             {/* Tag Names */}
             <div className="flex flex-wrap gap-1.5 mb-3">
-              {tags.map((val, index) => (
+              {tagLables.map((val, index) => (
                 <span
                   key={index}
                   className="inline-flex items-center gap-0.5 text-[10px] font-medium text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-700/80 px-2 py-0.5 rounded-md"
