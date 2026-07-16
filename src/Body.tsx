@@ -17,9 +17,9 @@ const Body = () => {
     setShowHelpPage(false)
   }
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-slate-50 dark:bg-[#0F172A] text-slate-800 dark:text-slate-200 font-sans select-none">
+    <div className="flex bg-slate-50 dark:bg-[#0F172A] text-slate-800 dark:text-slate-200 font-sans select-none">
       <SideNavBar />
-      <div className="h-screen w-screen">
+      <div className="flex flex-col flex-1 h-screen overflow-hidden">
         <Header />
         <PriorityBorad />
         {showHelpPage && <HelpPage onClose={handleCloseHelpPage}/>}
