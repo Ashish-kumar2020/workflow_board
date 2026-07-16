@@ -1,6 +1,20 @@
 import { LucideBriefcase,  LucideRedo2, LucideRefreshCcw, LucideUndo2, Sun } from "lucide-react";
+import type { CreateTaskInterface } from "../boardtypes/board.types";
 
-const PriorityBorad = () => {
+
+type PriorityBoardProps = {
+  
+  setTasks: React.Dispatch<React.SetStateAction<CreateTaskInterface[]>>;
+
+};
+
+const PriorityBorad = ({setTasks}: PriorityBoardProps) => {
+
+  const handleResetData = () => {
+    localStorage.removeItem("taskList");
+     setTasks([]);
+  }
+  
   return (
     <div className="h-12 px-6 sm:px-8 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800 shrink-0">
       {/* Left Side */}
@@ -67,7 +81,7 @@ const PriorityBorad = () => {
          <button title="Workspace Setting" className="p-1.5 hover:bg-slate-800 rounded text-slate-500 cursor-pointer"><LucideBriefcase size={14}/></button>
 
          {/* Reset Data */}
-         <button title="Reset Data" className="p-1.5 hover:bg-rose-950/50 rounded hover:text-rose-500 cursor-pointer"><LucideRefreshCcw size={14}/></button>
+         <button title="Reset Data" className="p-1.5 hover:bg-rose-950/50 rounded hover:text-rose-500 cursor-pointer" onClick={handleResetData}><LucideRefreshCcw size={14}/></button>
       </div>
     </div>
   );

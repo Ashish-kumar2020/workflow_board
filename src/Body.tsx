@@ -42,9 +42,9 @@ const Body = () => {
       <SideNavBar />
       <div className="flex flex-col flex-1 h-screen overflow-hidden">
         <Header onCreateTask={addTask} />
-        <PriorityBorad />
+        <PriorityBorad setTasks={setTasks}/>
         {showHelpPage && <HelpPage onClose={handleCloseHelpPage} />}
-        <BoardDescription />
+        <BoardDescription tasks={tasks}/>
         <DragDropMain tasks={tasks} setTasks={setTasks} onCreateTask={addTask}/>
       </div>
     </div>

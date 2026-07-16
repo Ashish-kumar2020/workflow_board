@@ -1,26 +1,19 @@
-import { useState } from "react";
+
 import type { CreateTaskInterface } from "../boardtypes/board.types";
 
-const BoardDescription = () => {
-  const [getTaskCount] = useState<CreateTaskInterface[]>(
-    () => {
-      try {
-        const taskList = localStorage.getItem("taskList");
-        return taskList ? JSON.parse(taskList) : [];
-      } catch {
-        return [];
-      }
-    },
-  );
+type BoardDescriptionProps = {
+  tasks: CreateTaskInterface[];
+};
 
+const BoardDescription = ({ tasks }: BoardDescriptionProps) => {
 
-  const backlogTaskCount = getTaskCount.filter(
-    (t) => t.targetColumn === "backlog",
-  );
-  const inProgressTaskCount = getTaskCount.filter(
+  const backlogTaskCount = tasks.filter((t) => t.targetColumn === "backlog");
+
+  const inProgressTaskCount = tasks.filter(
     (t) => t.targetColumn === "inprogress",
   );
-  const doneTaskCount = getTaskCount.filter((t) => t.targetColumn === "done");
+
+  const doneTaskCount = tasks.filter((t) => t.targetColumn === "done");
   return (
     <div className="px-6 sm:px-8 py-2.5 bg-white dark:bg-[#0F172A] border-b border-slate-200 dark:border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-2.5 text-xs shrink-0">
       <div className="text-slate-400 text-[11px]">
@@ -29,7 +22,7 @@ const BoardDescription = () => {
 
       <div className="flex items-center justify-center gap-2.5">
         <span className="gap-1 bg-slate-800 rounded-md font-medium text-[10px] px-2 py-1 cursor-pointer">
-          Total: <strong>{getTaskCount.length}</strong>
+          Total: <strong>{tasks.length}</strong>
         </span>
         <span className="gap-1 bg-amber-500/10 text-amber-400 rounded-md font-medium text-[10px] px-2 py-1 cursor-pointer">
           Backlog: <strong>{backlogTaskCount.length}</strong>
