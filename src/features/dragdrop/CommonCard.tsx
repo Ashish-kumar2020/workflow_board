@@ -102,7 +102,7 @@ const CommonCard = ({ id, task, dotColor, cardName, tags,onCreateTask }: Props) 
                 No Task Here
               </span>
 
-             {cardName === "backlog" &&  <button className="mt-1.5 text-[10px] font-bold text-blue-400 hover:underline cursor-pointer" onClick={handleCreatetask}>
+             {cardName == "Backlog" &&  <button className="mt-1.5 text-[10px] font-bold text-blue-400 hover:underline cursor-pointer" onClick={handleCreatetask}>
                 Add a task
               </button>}
             </div>

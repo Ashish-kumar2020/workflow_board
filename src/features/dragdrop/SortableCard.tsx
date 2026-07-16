@@ -32,6 +32,7 @@ const SortableCard = ({ task, dotColor, cardName, tags }: Props) => {
         dotColor={dotColor}
         cardName={cardName}
         tags={tags}
+        key={task.key}
       />
     </div>
   );
