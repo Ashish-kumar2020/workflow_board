@@ -12,9 +12,9 @@ const NewTask = ({ onClose ,onCreate}: NewtaskProps) => {
     id: "",
     taskTitle: "",
     description: "",
-    targetColumn: "",
+    targetColumn: "backlog",
     dueDate: "",
-    taskPriority: "backlog",
+    taskPriority: "",
     tagLables: [],
   });
 
@@ -61,9 +61,9 @@ const NewTask = ({ onClose ,onCreate}: NewtaskProps) => {
       id: "",
       taskTitle: "",
       description: "",
-      targetColumn: "",
+      targetColumn: "backlog",
       dueDate: "",
-      taskPriority: "backlog",
+      taskPriority: "",
       tagLables: [],
     });
     setTagInput("");
@@ -151,20 +151,20 @@ const NewTask = ({ onClose ,onCreate}: NewtaskProps) => {
                 >
                   Target Column <span className="text-rose-500">*</span>
                 </label>
-                <select
+                <input
                   className="w-full px-3.5 py-2 text-sm text-slate-900 dark:text-white bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500/35 focus:border-blue-500 transition-shadow"
                   value={createTask.targetColumn}
-                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                     setCreateTask((prev) => ({
                       ...prev,
                       targetColumn: e.target.value,
                     }))
                   }
                 >
-                  <option value="backlog">Backlog</option>
+                  {/* <option value="backlog">Backlog</option>
                   <option value="inprogress">In Progress</option>
-                  <option value="done">Done</option>
-                </select>
+                  <option value="done">Done</option> */}
+                </input>
               </div>
               <div>
                 <label
@@ -207,6 +207,7 @@ const NewTask = ({ onClose ,onCreate}: NewtaskProps) => {
                   }))
                 }
               >
+                <option value="selectthepriority">Select the Priority</option>
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>

@@ -45,7 +45,7 @@ const Body = () => {
         <PriorityBorad />
         {showHelpPage && <HelpPage onClose={handleCloseHelpPage} />}
         <BoardDescription />
-        <DragDropMain tasks={tasks} setTasks={setTasks} />
+        <DragDropMain tasks={tasks} setTasks={setTasks} onCreateTask={addTask}/>
       </div>
     </div>
   );

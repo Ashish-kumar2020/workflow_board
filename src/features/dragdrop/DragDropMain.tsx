@@ -23,9 +23,10 @@ const COLUMNS = ["backlog", "inprogress", "done"];
 type DragDropMainProps = {
   tasks: CreateTaskInterface[];
   setTasks: React.Dispatch<React.SetStateAction<CreateTaskInterface[]>>;
+  onCreateTask: (task: CreateTaskInterface) => void;
 };
 
-const DragDropMain = ({tasks,setTasks}:DragDropMainProps) => {
+const DragDropMain = ({tasks,setTasks,onCreateTask}:DragDropMainProps) => {
   const [activeTask, setActiveTask] = useState<CreateTaskInterface | null>(null);
 
   const sensors = useSensors(
@@ -95,9 +96,9 @@ const DragDropMain = ({tasks,setTasks}:DragDropMainProps) => {
         onDragOver={handleDragOver}
         onDragEnd={handleDragEnd}
       >
-        <CommonCard id="backlog" dotColor="bg-blue-400 dark:bg-blue-500" cardName="Backlog" tags={["#qa", "#cicd"]} task={backlogTask} />
-        <CommonCard id="inprogress" dotColor="bg-blue-400 dark:bg-blue-500" cardName="InProgress" tags={["#qa", "#cicd"]} task={inProgressTask} />
-        <CommonCard id="done" dotColor="bg-blue-400 dark:bg-blue-500" cardName="Done" tags={["#qa", "#cicd"]} task={doneTask} />
+        <CommonCard id="backlog" dotColor="bg-blue-400 dark:bg-blue-500" cardName="Backlog" tags={["#qa", "#cicd"]} task={backlogTask} onCreateTask={onCreateTask}/>
+        <CommonCard id="inprogress" dotColor="bg-blue-400 dark:bg-blue-500" cardName="InProgress" tags={["#qa", "#cicd"]} task={inProgressTask} onCreateTask={onCreateTask}/>
+        <CommonCard id="done" dotColor="bg-blue-400 dark:bg-blue-500" cardName="Done" tags={["#qa", "#cicd"]} task={doneTask} onCreateTask={onCreateTask}/>
 
         <CreateColumn />
 

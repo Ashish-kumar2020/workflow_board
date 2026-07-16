@@ -11,6 +11,7 @@ import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable"
 
 import type { CreateTaskInterface } from "../boardtypes/board.types";
 import SortableCard from "./SortableCard";
+import NewTask from "../board/NewTask";
 
 type Props = {
   id: string; 
@@ -18,15 +19,20 @@ type Props = {
   dotColor: string;
   cardName: string;
   tags: string[];
+   onCreateTask: (task: CreateTaskInterface) => void;
 };
 
-const CommonCard = ({ id, task, dotColor, cardName, tags }: Props) => {
+const CommonCard = ({ id, task, dotColor, cardName, tags,onCreateTask }: Props) => {
   const [isEditOption, setIsEditOption] = useState(false);
   const { setNodeRef } = useDroppable({ id });
-
+  const [isAddtask,setIsAddTask] = useState(false);
   const handleEditOption = () => {
     setIsEditOption((prev) => !prev);
   };
+
+  const handleCreatetask = () => {
+    setIsAddTask((prev) => !prev)
+  }
 
   return (
     <div className="w-82 shrink-0 rounded-3xl border-2 border-slate-800 bg-slate-900 p-6 flex flex-col">
@@ -96,9 +102,9 @@ const CommonCard = ({ id, task, dotColor, cardName, tags }: Props) => {
                 No Task Here
               </span>
 
-              <button className="mt-1.5 text-[10px] font-bold text-blue-400 hover:underline cursor-pointer">
+             {cardName === "backlog" &&  <button className="mt-1.5 text-[10px] font-bold text-blue-400 hover:underline cursor-pointer" onClick={handleCreatetask}>
                 Add a task
-              </button>
+              </button>}
             </div>
           ) : (
             task.map((val) => (
@@ -113,6 +119,12 @@ const CommonCard = ({ id, task, dotColor, cardName, tags }: Props) => {
           )}
         </SortableContext>
       </div>
+
+      {
+        isAddtask && (
+          <NewTask onClose={() => setIsAddTask(false)} onCreate={onCreateTask} />
+        )
+      }
     </div>
   );
 };

@@ -34,16 +34,7 @@ const Cards = ({  taskTitle,description,dueDate,taskPriority,tagLables }: Props)
 
 
         <div className="flex-1 overflow-y-auto max-h-[70vh] min-h-[150px] space-y-3 pr-1 scrollbar-thin scrollbar-thumb-slate-200 hover:scrollbar-thumb-slate-350 rounded-xl transition-colors duration-150 p-1 ">
-          {/* If Content is not present */}
-          {/* <div className="h-28 flex flex-col items-center justify-center text-center p-4 border border-dashed border-slate-200 dark:border-slate-800 rounded-xl bg-slate-50/20 dark:bg-slate-900/10">
-            <span className="text-[10px] font-medium text-slate-400 dark:text-slate-500">
-              No Task Here
-            </span>
-            <button className="mt-1.5 text-[10px] font-bold text-blue-600 dark:text-blue-400 hover:underline cursor-pointer">
-              Add a task
-            </button>
-          </div> */}
-
+        
           {/* If Content is present */}
           <div className="group relative bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-xl p-4 shadow-xs hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all cursor-grab active:cursor-grabbing select-none">
             <div className="flex items-start justify-between gap-2 mb-2">
