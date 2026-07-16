@@ -1,95 +1,121 @@
-import { useState } from "react";
-import { DndContext, type DragEndEvent } from "@dnd-kit/core";
-// import Cards from "./Cards";
-import { SortableContext, arrayMove } from "@dnd-kit/sortable";
+import { useEffect, useState } from "react";
+import {
+  DndContext,
+  DragOverlay,
+  PointerSensor,
+  useSensor,
+  useSensors,
+  closestCorners,
+  type DragEndEvent,
+  type DragOverEvent,
+  type DragStartEvent,
+} from "@dnd-kit/core";
+import { arrayMove } from "@dnd-kit/sortable";
 import CreateColumn from "../createCard/CreateColumn";
 import CommonCard from "./CommonCard";
+import Cards from "./Cards";
+import type { CreateTaskInterface } from "../boardtypes/board.types";
 
-type Task = {
-  taskTitle: string;
-  description: string;
-  targetColumn: string;
-  dueDate: string;
-  taskPriority: string;
-  tagLables: string;
-  key?: string;
-};
+const COLUMNS = ["backlog", "inprogress", "done"];
 
 const DragDropMain = () => {
-  const [tasks, setTasks] = useState<Task[]>(() => {
+  const [tasks, setTasks] = useState<CreateTaskInterface[]>(() => {
     try {
       const taskList = localStorage.getItem("taskList");
       return taskList ? JSON.parse(taskList) : [];
-    } catch (error) {
-      console.error("Failed to parse taskList from localStorage", error);
+    } catch {
       return [];
     }
   });
+  const [activeTask, setActiveTask] = useState<CreateTaskInterface | null>(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
+  );
+
+  const findColumn = (id: string) => {
+    if (COLUMNS.includes(id)) return id; 
+    return tasks.find((t) => t.id === id)?.targetColumn;
+  };
+
+  const handleDragStart = (event: DragStartEvent) => {
+    const task = tasks.find((t) => t.id === event.active.id);
+    setActiveTask(task ?? null);
+  };
+
+  const handleDragOver = (event: DragOverEvent) => {
+    const { active, over } = event;
+    if (!over) return;
+
+    const activeColumn = findColumn(String(active.id));
+    const overColumn = findColumn(String(over.id));
+
+    if (!activeColumn || !overColumn || activeColumn === overColumn) return;
+
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === active.id ? { ...t, targetColumn: overColumn } : t
+      )
+    );
+  };
 
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+    setActiveTask(null);
+    if (!over) return;
 
-    if (!over || active.id === over.id) return;
+    const activeIndex = tasks.findIndex((t) => t.id === active.id);
+    const overIndex = tasks.findIndex((t) => t.id === over.id);
 
-    const oldIndex = tasks.findIndex((task) => task.id === active.id);
-
-    const newIndex = tasks.findIndex((task) => task.id === over.id);
-
-    setTasks((tasks) => arrayMove(tasks, oldIndex, newIndex));
+    if (activeIndex !== -1 && overIndex !== -1 && activeIndex !== overIndex) {
+      setTasks((prev) => arrayMove(prev, activeIndex, overIndex));
+    }
   };
+   useEffect(() => {
+    try {
+      localStorage.setItem("taskList", JSON.stringify(tasks));
+    } catch (error) {
+      console.error("Failed to save taskList to localStorage", error);
+    }
+  }, [tasks]);
 
-  const backlogTask = tasks.filter((task) => task.targetColumn === "backlog");
-  const inProgressTask = tasks.filter(
-    (task) => task.targetColumn === "inprogress",
-  );
-  const doneTask = tasks.filter((task) => task.targetColumn === "done");
+
+  const backlogTask = tasks.filter((t) => t.targetColumn === "backlog");
+  const inProgressTask = tasks.filter((t) => t.targetColumn === "inprogress");
+  const doneTask = tasks.filter((t) => t.targetColumn === "done");
+
+
 
   return (
     <div className="flex-1 overflow-x-auto p-6 bg-[#f8fafc] dark:bg-[#0a0f1d] h-full select-none flex gap-6">
-      <DndContext onDragEnd={handleDragEnd}>
-        <SortableContext items={tasks.map((task) => task.key)}>
-          
-              <CommonCard
-                dotColor="bg-blue-400 dark:bg-blue-500"
-                cardName="Backlog"
-                tags={["#qa", "#cicd"]}
-                task={backlogTask}
-              />
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
+        onDragOver={handleDragOver}
+        onDragEnd={handleDragEnd}
+      >
+        <CommonCard id="backlog" dotColor="bg-blue-400 dark:bg-blue-500" cardName="Backlog" tags={["#qa", "#cicd"]} task={backlogTask} />
+        <CommonCard id="inprogress" dotColor="bg-blue-400 dark:bg-blue-500" cardName="InProgress" tags={["#qa", "#cicd"]} task={inProgressTask} />
+        <CommonCard id="done" dotColor="bg-blue-400 dark:bg-blue-500" cardName="Done" tags={["#qa", "#cicd"]} task={doneTask} />
 
-               <CommonCard
-                dotColor="bg-blue-400 dark:bg-blue-500"
-                cardName="InProgress"
-                tags={["#qa", "#cicd"]}
-                task={inProgressTask}
-              />
+        <CreateColumn />
 
-               <CommonCard
-                dotColor="bg-blue-400 dark:bg-blue-500"
-                cardName="Done"
-                tags={["#qa", "#cicd"]}
-                task={doneTask}
-              />
-            
-
-          {/* Inprogress TAsk */}
-          {/* {inProgressTask.map((task) => {
-            return (
-              <Cards
-                dotColor="bg-blue-400 dark:bg-blue-500"
-                cardName="Backlog"
-                priority={task.taskPriority}
-                title={task.taskTitle}
-                description={task.description}
-                tags={["#qa", "#cicd"]}
-                startDate={task.dueDate}
-                rightArrow="LucideArrowRight"
-                leftArrow="LucideArrowLeft"
-              />
-            );
-          })} */}
-
-          <CreateColumn />
-        </SortableContext>
+        <DragOverlay>
+          {activeTask ? (
+            <Cards
+              taskTitle={activeTask.taskTitle}
+              description={activeTask.description}
+              targetColumn={activeTask.targetColumn}
+              dueDate={activeTask.dueDate}
+              taskPriority={activeTask.taskPriority}
+              tagLables={activeTask.tagLables}
+              dotColor="bg-blue-400"
+              cardName=""
+              tags={["#qa", "#cicd"]}
+            />
+          ) : null}
+        </DragOverlay>
       </DndContext>
     </div>
   );

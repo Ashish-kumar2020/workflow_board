@@ -6,19 +6,23 @@ import {
   LucidePlus,
   LucideTrash2,
 } from "lucide-react";
+import { useDroppable } from "@dnd-kit/core";
+import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 
 import type { CreateTaskInterface } from "../boardtypes/board.types";
-import Cards from "./Cards";
+import SortableCard from "./SortableCard";
 
 type Props = {
+  id: string; 
   task: CreateTaskInterface[];
   dotColor: string;
   cardName: string;
   tags: string[];
 };
 
-const CommonCard = ({ task, dotColor, cardName, tags }: Props) => {
+const CommonCard = ({ id, task, dotColor, cardName, tags }: Props) => {
   const [isEditOption, setIsEditOption] = useState(false);
+  const { setNodeRef } = useDroppable({ id });
 
   const handleEditOption = () => {
     setIsEditOption((prev) => !prev);
@@ -78,33 +82,36 @@ const CommonCard = ({ task, dotColor, cardName, tags }: Props) => {
       </div>
 
       {/* Task List */}
-      <div className="flex flex-col items-center overflow-y-auto">
-        {task.length === 0 ? (
-          <div className="h-28 flex flex-col items-center justify-center text-center p-4 border border-dashed border-slate-700 rounded-xl bg-slate-900/20">
-            <span className="text-[10px] font-medium text-slate-500">
-              No Task Here
-            </span>
+      <div
+        ref={setNodeRef}
+        className="flex flex-col items-center overflow-y-auto"
+      >
+        <SortableContext
+          items={task.map((t) => t.id!)}
+          strategy={verticalListSortingStrategy}
+        >
+          {task.length === 0 ? (
+            <div className="w-72 h-40 flex flex-col items-center justify-center text-center p-4 border border-dashed border-slate-700 rounded-xl bg-slate-900/20">
+              <span className="text-[10px] font-medium text-slate-500">
+                No Task Here
+              </span>
 
-            <button className="mt-1.5 text-[10px] font-bold text-blue-400 hover:underline cursor-pointer">
-              Add a task
-            </button>
-          </div>
-        ) : (
-          task.map((val) => (
-            <Cards
-              key={val.key}
-              taskTitle={val.taskTitle}
-              description={val.description}
-              targetColumn={val.targetColumn}
-              dueDate={val.dueDate}
-              taskPriority={val.taskPriority}
-              tagLables={val.tagLables}
-              dotColor={dotColor}
-              cardName={cardName}
-              tags={tags}
-            />
-          ))
-        )}
+              <button className="mt-1.5 text-[10px] font-bold text-blue-400 hover:underline cursor-pointer">
+                Add a task
+              </button>
+            </div>
+          ) : (
+            task.map((val) => (
+              <SortableCard
+                key={val.id}
+                task={val}
+                dotColor={dotColor}
+                cardName={cardName}
+                tags={tags}
+              />
+            ))
+          )}
+        </SortableContext>
       </div>
     </div>
   );
