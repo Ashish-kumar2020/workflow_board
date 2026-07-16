@@ -51,7 +51,7 @@ const CommonCard = ({ id, task, dotColor, cardName, tags,onCreateTask }: Props) 
         </div>
 
         <div className="flex items-center gap-0.5">
-          <button className="p-1 text-slate-500 hover:text-slate-200 hover:bg-slate-800 rounded transition-colors cursor-pointer">
+          <button className="p-1 text-slate-500 hover:text-slate-200 hover:bg-slate-800 rounded transition-colors cursor-pointer" onClick={handleCreatetask}>
             <LucidePlus size={13} />
           </button>
 
