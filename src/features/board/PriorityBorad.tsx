@@ -7,18 +7,22 @@ import {
 } from "lucide-react";
 import type { CreateTaskInterface } from "../boardtypes/board.types";
 
+
 type PriorityBoardProps = {
   setTasks: React.Dispatch<React.SetStateAction<CreateTaskInterface[]>>;
   tagsData: string[];
- 
+  setShowAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const PriorityBorad = ({ setTasks, tagsData }: PriorityBoardProps) => {
+const PriorityBorad = ({ setTasks, tagsData,setShowAlert }: PriorityBoardProps) => {
   const handleResetData = () => {
     localStorage.removeItem("taskList");
     setTasks([]);
   };
 
+  const updateTagNamesDetails = () => {
+     setShowAlert(true);
+  }
 
 
   return (
@@ -52,8 +56,8 @@ const PriorityBorad = ({ setTasks, tagsData }: PriorityBoardProps) => {
             {tagsData.map((tag) => (
               <button
                 key={tag}
-                className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold cursor-pointer hover:bg-slate-600"
-                
+                className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold cursor-pointer hover:bg-slate-600 "
+                onClick={updateTagNamesDetails}
               >
                 #{tag}
               </button>
@@ -61,6 +65,7 @@ const PriorityBorad = ({ setTasks, tagsData }: PriorityBoardProps) => {
           </div>
         </div>
       </div>
+
 
       {/* Right Side */}
       <div className="flex items-center gap-2 shrink-0">
