@@ -10,6 +10,7 @@ import type { CreateTaskInterface } from "./features/boardtypes/board.types";
 
 const Body = () => {
   const [showHelpPage, setShowHelpPage] = useState(false);
+
   useKeyPressEvent("h", () => setShowHelpPage((prev) => !prev));
 
   const handleCloseHelpPage = () => {
@@ -28,6 +29,8 @@ const Body = () => {
   useEffect(() => {
     try {
       localStorage.setItem("taskList", JSON.stringify(tasks));
+
+      
     } catch (error) {
       console.error("Failed to save taskList to localStorage", error);
     }
@@ -37,12 +40,14 @@ const Body = () => {
     setTasks((prev) => [...prev, task]);
   };
 
+  const tagsData = [...new Set(tasks.flatMap(task => task.tagLables || []))];
+ 
   return (
     <div className="flex bg-slate-50 dark:bg-[#0F172A] text-slate-800 dark:text-slate-200 font-sans select-none">
       <SideNavBar />
       <div className="flex flex-col flex-1 h-screen overflow-hidden">
         <Header onCreateTask={addTask} />
-        <PriorityBorad setTasks={setTasks}/>
+        <PriorityBorad setTasks={setTasks} tagsData={tagsData} />
         {showHelpPage && <HelpPage onClose={handleCloseHelpPage} />}
         <BoardDescription tasks={tasks}/>
         <DragDropMain tasks={tasks} setTasks={setTasks} onCreateTask={addTask}/>

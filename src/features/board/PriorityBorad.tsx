@@ -1,20 +1,26 @@
-import { LucideBriefcase,  LucideRedo2, LucideRefreshCcw, LucideUndo2, Sun } from "lucide-react";
+import {
+  LucideBriefcase,
+  LucideRedo2,
+  LucideRefreshCcw,
+  LucideUndo2,
+  Sun,
+} from "lucide-react";
 import type { CreateTaskInterface } from "../boardtypes/board.types";
 
-
 type PriorityBoardProps = {
-  
   setTasks: React.Dispatch<React.SetStateAction<CreateTaskInterface[]>>;
-
+  tagsData: string[];
+ 
 };
 
-const PriorityBorad = ({setTasks}: PriorityBoardProps) => {
-
+const PriorityBorad = ({ setTasks, tagsData }: PriorityBoardProps) => {
   const handleResetData = () => {
     localStorage.removeItem("taskList");
-     setTasks([]);
-  }
-  
+    setTasks([]);
+  };
+
+
+
   return (
     <div className="h-12 px-6 sm:px-8 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800 shrink-0">
       {/* Left Side */}
@@ -43,21 +49,15 @@ const PriorityBorad = ({setTasks}: PriorityBoardProps) => {
           <span className="font-semibold text-slate-200">Lables:</span>
 
           <div className="flex items-center gap-1">
-            <button className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold cursor-pointer hover:bg-slate-600">
-              #api
-            </button>
-
-            <button className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold cursor-pointer hover:bg-slate-600">
-              #react
-            </button>
-
-            <button className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold cursor-pointer hover:bg-slate-600">
-              #backend
-            </button>
-
-            <button className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold cursor-pointer hover:bg-slate-600">
-              #devops
-            </button>
+            {tagsData.map((tag) => (
+              <button
+                key={tag}
+                className="px-2 py-0.5 rounded bg-slate-800 text-[10px] font-bold cursor-pointer hover:bg-slate-600"
+                
+              >
+                #{tag}
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -65,23 +65,45 @@ const PriorityBorad = ({setTasks}: PriorityBoardProps) => {
       {/* Right Side */}
       <div className="flex items-center gap-2 shrink-0">
         <div className="border border-slate-700 rounded-lg flex items-center bg-slate-800 p-1 ">
-          <button title="Undo Last Action (ctrl+Z)" className="p-1 rounded-md text-slate-400 cursor-pointer hover:text-slate-700">
+          <button
+            title="Undo Last Action (ctrl+Z)"
+            className="p-1 rounded-md text-slate-400 cursor-pointer hover:text-slate-700"
+          >
             <LucideUndo2 size={13} />
           </button>
 
-          <button title="Redo Last Action (ctrl+Y)" className="p-1 rounded-md text-slate-400 cursor-pointer hover:text-slate-700">
+          <button
+            title="Redo Last Action (ctrl+Y)"
+            className="p-1 rounded-md text-slate-400 cursor-pointer hover:text-slate-700"
+          >
             <LucideRedo2 size={13} />
           </button>
         </div>
         <div className="h-4 w-px bg-slate-200"></div>
         {/* Theme toggler */}
-        <button title="Toggle Theme" className="p-1.5 hover:bg-slate-800 rounded text-slate-500 cursor-pointer"><Sun size={14}/></button>
+        <button
+          title="Toggle Theme"
+          className="p-1.5 hover:bg-slate-800 rounded text-slate-500 cursor-pointer"
+        >
+          <Sun size={14} />
+        </button>
 
         {/* Workspace Setting */}
-         <button title="Workspace Setting" className="p-1.5 hover:bg-slate-800 rounded text-slate-500 cursor-pointer"><LucideBriefcase size={14}/></button>
+        <button
+          title="Workspace Setting"
+          className="p-1.5 hover:bg-slate-800 rounded text-slate-500 cursor-pointer"
+        >
+          <LucideBriefcase size={14} />
+        </button>
 
-         {/* Reset Data */}
-         <button title="Reset Data" className="p-1.5 hover:bg-rose-950/50 rounded hover:text-rose-500 cursor-pointer" onClick={handleResetData}><LucideRefreshCcw size={14}/></button>
+        {/* Reset Data */}
+        <button
+          title="Reset Data"
+          className="p-1.5 hover:bg-rose-950/50 rounded hover:text-rose-500 cursor-pointer"
+          onClick={handleResetData}
+        >
+          <LucideRefreshCcw size={14} />
+        </button>
       </div>
     </div>
   );

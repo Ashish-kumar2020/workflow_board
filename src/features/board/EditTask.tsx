@@ -24,7 +24,6 @@ const EditTask = ({ taskTitle ,description,dueDate,taskPriority,tagLables,key,on
   tagLables,
 });
 
-  // Raw comma-separated text the user types; converted to string[] on submit
   const [tagInput, setTagInput] = useState("");
 
   const handleUpdateTask = () => {
